@@ -1,0 +1,420 @@
+\documentclass[11pt]{article}
+
+\newcommand{\yourname}{Ivan Ng}
+\newcommand{\yourcollaborators}{}
+
+\def\comments{0}
+
+%format and packages
+
+%\usepackage{algorithm, algorithmic}
+
+\usepackage{ulem}
+\usepackage{epsfig, graphicx}
+\usepackage[noend]{algpseudocode}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{palatino}
+	\DeclareMathAlphabet{\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet{\mathtt}{bold}{OT1}{cmtt}{bx}{n}
+	\DeclareMathAlphabet{\mathsf}{OT1}{cmss}{m}{n}
+	\SetMathAlphabet{\mathsf}{bold}{OT1}{cmss}{bx}{n}
+	\renewcommand*\ttdefault{cmtt}
+	\renewcommand*\sfdefault{cmss}
+	\renewcommand{\baselinestretch}{1.05}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{DarkGreen}{rgb}{0.15,0.5,0.15}
+\definecolor{DarkRed}{rgb}{0.6,0.2,0.2}
+\definecolor{DarkBlue}{rgb}{0.2,0.2,0.6}
+\definecolor{DarkPurple}{rgb}{0.4,0.2,0.4}
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+	linktocpage=true,
+	colorlinks=true,				% false: boxed links; true: colored links
+	linkcolor=DarkBlue,		% color of internal links
+	citecolor=DarkBlue,	% color of links to bibliography
+	urlcolor=DarkBlue,		% color of external links
+}
+
+\usepackage[boxruled,vlined,nofillcomment]{algorithm2e}
+	\SetKwProg{Fn}{Function}{\string:}{}
+	\SetKwFor{While}{While}{}{}
+	\SetKwFor{For}{For}{}{}
+	\SetKwIF{If}{ElseIf}{Else}{If}{:}{ElseIf}{Else}{:}
+	\SetKw{Return}{Return}
+	
+
+%enclosure macros
+\newcommand{\paren}[1]{\ensuremath{\left( {#1} \right)}}
+\newcommand{\bracket}[1]{\ensuremath{\left\{ {#1} \right\}}}
+\renewcommand{\sb}[1]{\ensuremath{\left[ {#1} \right\]}}
+\newcommand{\ab}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+
+%probability macros
+\newcommand{\ex}[2]{{\ifx&#1& \mathbb{E} \else \underset{#1}{\mathbb{E}} \fi \left[#2\right]}}
+\newcommand{\pr}[2]{{\ifx&#1& \mathbb{P} \else \underset{#1}{\mathbb{P}} \fi \left[#2\right]}}
+\newcommand{\var}[2]{{\ifx&#1& \mathrm{Var} \else \underset{#1}{\mathrm{Var}} \fi \left[#2\right]}}
+
+%useful CS macros
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\pmo}{\{\pm1\}}
+\newcommand{\getsr}{\gets_{\mbox{\tiny R}}}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\eqand}{\qquad \textrm{and} \qquad}
+\newcommand{\ind}[1]{\mathbb{I}\{#1\}}
+\newcommand{\sslash}{\ensuremath{\mathbin{/\mkern-3mu/}}}
+
+%info theory macros
+\newcommand{\SD}{\mathit{SD}}
+\newcommand{\sd}[2]{\SD\left( #1 , #2 \right)}
+\newcommand{\KL}{\mathit{KL}}
+\newcommand{\kl}[2]{\KL\left(#1 \| #2 \right)}
+\newcommand{\CS}{\ensuremath{\chi^2}}
+\newcommand{\cs}[2]{\CS\left(#1 \| #2 \right)}
+\newcommand{\MI}{\mathit{I}}
+\newcommand{\mi}[2]{\MI\left(~#1~;~#2~\right)}
+
+%mathbb
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+%mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\hs}{\hspace{0.2in}}
+%theorem macros
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+	\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{theorem}
+\newtheorem{prob}{Problem}
+
+
+\newcommand{\course}{CS 3000: Algorithms \& Data}
+\newcommand{\semester}{Spring 2024}
+
+\newcommand{\hwnum}{1}
+\newcommand{\hwdue}{Friday Feb 2 at 11:59pm via Gradescope}
+
+\definecolor{cit}{rgb}{0.05,0.2,0.45} 
+
+\newif\ifsolution
+
+\solutiontrue
+%\solutionfalse
+\ifsolution
+\newcommand{\solution}[1]{\medskip\noindent{\color{DarkBlue}\textbf{Solution:}} #1}
+\else
+\newcommand{\solution}[1]{}
+\fi
+
+\documentclass{article}
+\usepackage{forest}
+\usepackage{algorithm}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+
+\begin{document}
+{\Large 
+\begin{center} 
+\course\ --- \semester\  \\
+Homework 2
+\end{center}
+}
+{\large
+\vspace{10pt}
+% \noindent Sample Solutions to Homework~\hwnum \vspace{2pt}\\
+Due~\hwdue}
+
+\vspace{15pt}
+\bigskip
+{\large
+\noindent Name: \yourname \vspace{2pt}\\ Collaborators: \yourcollaborators}
+
+\vspace{15pt}
+\begin{itemize}
+
+\item
+  Make sure to put your name on the first page.  If you are using the
+  \LaTeX~template we provided, then you can make sure it appears by
+  filling in the \texttt{yourname} command.
+
+\item This homework is due~\hwdue.  No late assignments will be accepted.  Make sure to submit something before the deadline.
+
+\item Solutions must be typeset in \LaTeX.  If you need to draw any diagrams,
+  you may draw them by hand as long as they are embedded in the PDF.
+  We recommend that you use the source file for this assignment to get started, which can be accessed from \href{https://www.overleaf.com/read/nggnrncbmbvm#d72762}{this} link.
+
+\item We encourage you to work with your classmates on the homework
+  problems, but also urge you to attempt all of the problems by
+  yourself first. \emph{If you do collaborate, you must write all
+    solutions by yourself, in your own words.}  Do not submit anything
+  you cannot explain.  Please list all your collaborators in your
+  solution for each problem by filling in the
+  \texttt{yourcollaborators} command.
+
+\item Finding solutions to homework problems on the web, or by asking
+  students not enrolled in the class is strictly forbidden.
+
+\end{itemize}
+\newpage
+
+
+%%%%%  PROBLEM 1
+\newpage
+\begin{prob} (20 points) Karatsuba Example \end{prob}
+
+\noindent Carry out Karatsuba's Algorithm to compute $47 \cdot 63$.  What are the inputs for each recursive call, what does that recursive call return, and how do we compute the final product?
+
+\solution
+Type your solution here. \\\\
+Karatsuba$(47, 63, 2)$: \\
+$2 \ne 1$ \\
+$m = \left\lceil \frac{2}{2} \right\rceil = 1$ \\
+$47 = 10^{1} \cdot 4 + 7      63 = 10^{1} \cdot 6 +3$ \\
+$a = 4, b = 7, c = 6, d = 3$ \\
+$e \longleftarrow$ Karatsuba$(4, 6, 1): n = 1 -> 4 \cdot 6 = 24$ \\
+$f \longleftarrow$ Karatsuba$(7, 3, 1): n = 1 -> 7 \cdot 3 = 21$ \\
+$g \longleftarrow$ Karatsuba$(3, 3, 1): n = 1 -> 3 \cdot 3 = 9$ \\
+Return $10^{2(2)} \cdot 24 + 10^{2} \cdot (24 + 21 + 9) + 21 = 2400 + 540 + 21 = 2961$ \\
+
+%%%%%% PROBLEM 2
+\newpage
+\begin{prob} (20 points) Recursion Tree \end{prob}
+
+\noindent Consider the following recurrence:
+
+$$T(n) = 3T(n/3) + 3T(n/2) + n^2$$
+$$T(1) = C$$
+
+We will show that $T(n) = O(n^{\log_2 (13/3)})$. To do this, start by examining the first three levels of the recursion tree, showing how to compute the amount of work at each level. From here, establish a formula for the amount of work on level $i$. Then, determine the last level of the recursion tree (note that it is sufficient to focus on the largest piece at level $i$, as we are only concerned with a Big-O bound). Finally, construct a summation which totals the amount of work over all levels and show why this summation is $T(n) = O(n^{\log_2 (13/3)})$.
+
+You are welcome to embed a photo of a hand draw image into your LaTeX file\footnote{\textbackslash includegraphics is useful for this}.\\
+
+\solution
+Type your solution here.
+
+\begin{forest}
+  for tree={circle, draw, minimum size=8mm, edge={->}}
+  [$n^{2}$
+    [$3(\frac{n}{3})^{2}$
+      [$3^{2}(\frac{n}{9})^{2}$]
+      [$3^{2}(\frac{n}{6})^{2}$]
+    ]
+    [$3(\frac{n}{2})^{2}$
+      [$3^{2}(\frac{n}{6})^{2}$]
+      [$3^{2}(\frac{n}{4})^{2}$]
+    ]
+  ]
+\end{forest} \\
+Level 1: $n^{2}$ \\
+Level 2: $3(\frac{n}{3})^{2} + 3(\frac{n}{2})^{2} = (\frac{1}{3} + \frac{3}{4})n^{2} = \frac{13}{12}n^{2}$ \\
+Level 3: $3^{2}(\frac{n}{9})^{2} + 3^{2}(\frac{n}{6})^{2} + 3^{2}(\frac{n}{6})^{2} + 3^{2}(\frac{n}{4})^{2} = (\frac{1}{9} + \frac{1}{4} + \frac{1}{4} + \frac{9}{16})n^{2} = \frac{169}{144}n^{2}$ \\
+Level $i$: $(\frac{13}{12})^{i}n^{2}$ \\
+$i = \log_2(n)$ when calculating for Big-O bound as it is larger than $\log_3(n)$ \\
+$\sum_{i = 0}^{\log_2(n)} (\frac{13}{12})^{i} = \sum_{i = 0}^{\log_2(n)} (\frac{13}{12})^{i} = (\frac{(\frac{13}{12})^{\log_2(n)} - 1}{\frac{13}{12} - 1}) = (12n^{\log_2(13/12)} - 12) = 12n^{\log_2(\frac{13}{3}) + \log_2(\frac{1}{4})} - 12$ \\
+$12n^{\log_2(\frac{13}{3}) + (-2)} - 12 = O(n^{\log_2(\frac{13}{3})})$
+
+\newpage
+
+%%%%%% PROBLEM 3
+\begin{prob}
+  \label{prob:sox}
+(15 + 5 = 19 points)  Help thy neighbor
+\end{prob}
+
+\noindent  2023 was a tough year for the Red Sox. Looking to find some silver linings in the difficult season, manager Alex Cora has asked you to help identify the best stretch of the season for the team. To do this, the analytics department has shared with you the run differentials from $n$ games this season. For each game, this value can be positive (if the Sox won) or negative (if they lost). For example, if they won 10-4, then lost 6-2, then won 3-2, the run differentials would be 6, -4, 1. Alex would like you to find the stretch of consecutive games such that the total run differential is maximized. The total run differential of a stretch of games is simply the sum of the run differentials of those games. 
+
+For example, consider the following:\\
+
+$n=7$,
+differentials: $-1, 5, -2, 1, 4, -3, 1$
+
+Here, the optimal solution is from game 2 to game 5, and the total run differential is 8.
+
+
+
+
+
+\begin{enumerate}[label=(\alph*)]
+\item Write (in pseudocode) a divide and conquer algorithm which solves this problem in $O(n \log n)$ time. Provide a few sentences describing your approach. Note that your algorithm should output the range of games that yields the maximum total run differential.
+
+\solution
+The algorithm uses two functions that perform merge sort and merging to determine the max differential. Upon merging, you compare the left, right, and total suffixes to determine which suffix is the highest to keep. The merging process will use two indices as parameters to give forth the highest total differential throughout the list.
+\begin{algorithm}[H]
+\caption{Highest Differential}
+\Fn{MergeSort($A[1,\ldots,n]$)}{
+  \If{$len(A) = 1$}{\Return $1, 1$}
+  \Else{
+    $m \gets \left\lceil \frac{len(A)}{2} \right\rceil$ \\
+    $L \gets A[1:m]$ \\
+    $R \gets A[m+1:n]$ \\
+    $x1, x2 \gets$ MergeSort($L$) \\ 
+    $y1, y2 \gets$ MergeSort($R$) \\
+    $ans1, ans2 = 1, 1$ \\
+    Merge($L , R , x1 , x2 , y1, y2, ans1, ans2$) \\
+    \Return $ans1, ans2$}
+}
+\Fn{Merge($L[\ldots] , R[\ldots] , x1, x2 , y1, y2, ans1, ans2$)}{
+$y1 \mathrel{+}= len(L)$ \\
+$y2 \mathrel{+}= len(L)$ \\
+$A[1,\ldots, n] \gets L + R$ \\
+Find the max($Sum(A[x1:x2]), Sum(A[x1:y2], Sum(A[y1:y2]))$ \\
+$ans1, ans2 \gets$ the range with the max sum
+}
+\end{algorithm}
+
+
+
+\item Write a recurrence for the runtime of your algorithm and solve it. You may use any method for solving the recurrence that we have discussed in class. Justify your recurrence.
+
+
+
+\solution \\
+$T(n) = 2T(n/2) + Cn$ \\
+$T(n) = \Theta(n\log(n))$ \\
+The recurrence is $2T(n/2)$ because you divide the array into two arrays of equal length which are half the length. At each level you compare some constant or proportion of $n$ that depends on where the max differential is at each level of the merge.
+
+\end{enumerate}
+
+\newpage
+
+
+%%%%%  PROBLEM 4
+\begin{prob}
+  \label{prob:equal}
+(2 + 3 + 10 + 5 = 20 points) Lucky coincidence
+\end{prob}
+
+Given a sorted array of distinct integers $A[1,\ldots,n]$, you want to find out whether there is an index $i$ such that $A[i] = i$. For example, in the array $A=\{3,5,6\}$, there is no $i$ such that $A[i]=i$ and the algorithm should return ``no index found''. On the other hand, for the array $A={0, 2, 7}$ we have $A[2]=2$ and the algorithm should return $i=2$.
+\begin{enumerate}[label=(\alph*)]
+\item What is the answer if $A[1] > 1$?
+
+\solution{
+  For all indices $j$, we have $A[j] > j$ so there is no $i$ such that $A[i]=i$. \\
+  Proof: \\
+  $A[1] > 1, A[2] > 2, ... , A[j] > j$
+}
+
+\item What is the answer if $A[n] < n$?
+
+\solution
+For all indices $j$, we have $A[j] < j$ so there is no $i$ such that $A[i] = i$. \\
+Proof: \\
+$A[n] < n, A[n - 1] < n - 1, ... , A[1] < 1$
+
+\item Give an efficient divide-and-conquer algorithm for this problem. Hint: check if $A[\lfloor n/2\rfloor]=\lfloor n/2\rfloor$. If not, try to recurse on a smaller problem.
+
+\solution
+\begin{algorithm}[H]
+\caption{Lucky Coincidence}
+\Fn{BinSearch($A[1,\ldots,n$)}{
+$s \gets \left\lfloor \frac{n}{2} \right\rfloor$ \Comment{Calculate the floor of n/2} \\
+  \If{$s = A[s]$}{\Return $i = s$}
+  \ElseIf{$s < A[s]$}{\Return BinSearch($s + 1,\ldots,n$)}
+  \Else{$s > A[s]$}{\Return BinSearch($1,\ldots,s - 1$)}
+}
+\end{algorithm}
+
+\item Write the recurrence of the running time and solve it using the master theorem.
+
+\solution \\
+$T(n) = T(\frac{n}{2}) + C$ \\
+$T(n) = O(\log(n))$
+\end{enumerate}
+
+\newpage
+
+%%%%%  PROBLEM 5
+\begin{prob}
+  \label{prob:potatoes}
+(15 + 5 = 20 points) Deep in tot
+\end{prob}
+
+
+\noindent You have been put in charge of judging the potato sorting contest at this year's Eastern Idaho State Fair. Each contestant is tasked with sorting $n$ potatoes by weight in ascending order, without the assistance of any equipment. The judging is as follows:
+
+\begin{itemize}
+\item Given an ordering of $n$ potatoes, a \emph{mistake} consists of two potatoes $i$ and $j$ such that potato $i$ is before potato $j$ in ther order, but $i$ weighs more than $j$.
+\end{itemize}
+
+You need to be able to quickly calculate the number of mistakes in a given ordering. The runtime of your algorithm should be $O(n \log(n))$ for full credit. You have the ability to compare the weights of two potatoes in $O(1)$ time.
+
+
+
+\begin{enumerate}[label=(\alph*)]
+\item Describe a divide-and-conquer algorithm (in pseudocode) which returns the number of mistakes. Provide a complete written description of your approach.
+
+\solution
+The algorithm has two functions that use merge sort and merging to calculate the number of mistakes. However, instead of returning a sorted list, it returns an accumulated total number of mistakes. It counts the mistakes during the merging process where it only points out a mistake if the R list is added before the L list to which the amount of mistakes is the L length minus the current slider on the L list. That way in every merge step, the mistakes that each potato has will be incremented appropriately assuming index starts with 1.
+\begin{algorithm}[H]
+\caption{Potato Sorting}
+\Fn{MergeSort($A[1,\ldots,n]$)}{
+  \If{$len(A) = 1$}{\Return $0$}
+  \Else{
+    $mistakes \gets 0, m \gets \left\lceil \frac{len(A)}{2} \right\rceil$ \\
+    $L \gets A[1:m] , R \gets A[m+1:n]$ \\
+    $mistakes \mathrel{+}=$ MergeSort($L$), $mistakes \mathrel{+}=$ MergeSort($R$) \Comment{Tracks mistakes when merging}\\
+    Merge($L , R , mistakes$) \\
+    \Return $mistakes$}
+}
+\Fn{Merge($L[\ldots] , R[\ldots] , mistakes$)}{
+$n \gets len(L) + len(R)$, $A[1,\ldots, n], j = 1, k = 1$ \\
+\For{$i = 1$ to $n$:}
+{\If{$j > len(L)$}{$A[i] \gets R[k], k \mathrel{+}= 1$} \\
+\ElseIf{$k > len(R)$}{$A[i] \gets L[j], j \mathrel{+}= 1, mistakes \mathrel{+}= (len(L) - j + 1)$}
+\ElseIf{$L[j] \le R[k]$}{$A[i] \gets L[j], j \mathrel{+}= 1$}
+  \Else{$A[i] \gets R[k], k \mathrel{+}= 1, mistakes \mathrel{+}= (len(L) - j + 1)$}
+}
+}
+\end{algorithm}
+
+\item State the worst-case asymptotic running time of your approach.  Write a recurrence which captures the worst-case runtime of your algorithm and solve it using any method that we've seen in class.
+
+\solution
+The worst-case running time is $O(n\log(n))$ which occurs when the order is backwards making the necessary number of comparisons between every list $2n$. \\
+$T(n) = 2T(n/2) + 2n$ is the recurrence equation so using the master theorem would make $T(n) = \Theta(n\log(n))$. \\
+Theta notation is equivalent to Big-O notation so this will be the upper-bound as well.
+
+\end{enumerate}
+
+
+\end{document}
