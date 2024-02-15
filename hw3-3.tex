@@ -1,0 +1,548 @@
+\documentclass[11pt]{article}
+
+\newcommand{\yourname}{Ivan Ng}
+\newcommand{\yourcollaborators}{}
+
+\def\comments{0}
+
+%format and packages
+
+%\usepackage{algorithm, algorithmic}
+
+\usepackage{ulem}
+\usepackage{epsfig, graphicx}
+\usepackage[noend]{algpseudocode}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{palatino}
+	\DeclareMathAlphabet{\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet{\mathtt}{bold}{OT1}{cmtt}{bx}{n}
+	\DeclareMathAlphabet{\mathsf}{OT1}{cmss}{m}{n}
+	\SetMathAlphabet{\mathsf}{bold}{OT1}{cmss}{bx}{n}
+	\renewcommand*\ttdefault{cmtt}
+	\renewcommand*\sfdefault{cmss}
+	\renewcommand{\baselinestretch}{1.05}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{DarkGreen}{rgb}{0.15,0.5,0.15}
+\definecolor{DarkRed}{rgb}{0.6,0.2,0.2}
+\definecolor{DarkBlue}{rgb}{0.2,0.2,0.6}
+\definecolor{DarkPurple}{rgb}{0.4,0.2,0.4}
+\usepackage{listings}
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+	linktocpage=true,
+	colorlinks=true,				% false: boxed links; true: colored links
+	linkcolor=DarkBlue,		% color of internal links
+	citecolor=DarkBlue,	% color of links to bibliography
+	urlcolor=DarkBlue,		% color of external links
+}
+\usepackage[ruled,vlined]{algorithm2e}
+
+%enclosure macros
+\newcommand{\paren}[1]{\ensuremath{\left( {#1} \right)}}
+\newcommand{\bracket}[1]{\ensuremath{\left\{ {#1} \right\}}}
+\renewcommand{\sb}[1]{\ensuremath{\left[ {#1} \right\]}}
+\newcommand{\ab}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+
+%probability macros
+\newcommand{\ex}[2]{{\ifx&#1& \mathbb{E} \else \underset{#1}{\mathbb{E}} \fi \left[#2\right]}}
+\newcommand{\pr}[2]{{\ifx&#1& \mathbb{P} \else \underset{#1}{\mathbb{P}} \fi \left[#2\right]}}
+\newcommand{\var}[2]{{\ifx&#1& \mathrm{Var} \else \underset{#1}{\mathrm{Var}} \fi \left[#2\right]}}
+
+%useful CS macros
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\pmo}{\{\pm1\}}
+\newcommand{\getsr}{\gets_{\mbox{\tiny R}}}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\eqand}{\qquad \textrm{and} \qquad}
+\newcommand{\ind}[1]{\mathbb{I}\{#1\}}
+\newcommand{\sslash}{\ensuremath{\mathbin{/\mkern-3mu/}}}
+
+%info theory macros
+\newcommand{\SD}{\mathit{SD}}
+\newcommand{\sd}[2]{\SD\left( #1 , #2 \right)}
+\newcommand{\KL}{\mathit{KL}}
+\newcommand{\kl}[2]{\KL\left(#1 \| #2 \right)}
+\newcommand{\CS}{\ensuremath{\chi^2}}
+\newcommand{\cs}[2]{\CS\left(#1 \| #2 \right)}
+\newcommand{\MI}{\mathit{I}}
+\newcommand{\mi}[2]{\MI\left(~#1~;~#2~\right)}
+
+%mathbb
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+%mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\hs}{\hspace{0.2in}}
+%theorem macros
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+	\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{theorem}
+\newtheorem{prob}{Problem}
+
+\newcommand{\opt}{\mbox{{\sc Opt}}}
+
+\newcommand{\course}{CS 3000: Algorithms \& Data}
+\newcommand{\semester}{Spring 2024}
+
+\newcommand{\hwnum}{3}
+\newcommand{\hwdue}{Wednesday February 14 at 11:59pm via Gradescope}
+
+\newif\ifsolution
+
+\solutiontrue
+%\solutionfalse
+\ifsolution
+\newcommand{\solution}[1]{{\medskip\noindent\color{DarkBlue}\textbf{Solution:} {#1}}}
+\else
+\newcommand{\solution}[1]{}
+\fi
+
+\begin{document}
+{\Large 
+\begin{center} \course\ --- \semester\ \end{center}}
+{\large
+\vspace{10pt}
+\noindent Homework~\hwnum \vspace{2pt}\\
+Due~\hwdue}
+
+\vspace{15pt}
+\bigskip
+{\large
+\noindent Name: \yourname \vspace{2pt}\\ Collaborators: \yourcollaborators}
+
+\vspace{15pt}
+\begin{itemize}
+
+\item
+  Make sure to put your name on the first page.  If you are using the
+  \LaTeX~template we provided, then you can make sure it appears by
+  filling in the \texttt{yourname} command.
+
+\item This homework is due~\hwdue.  No late assignments will be accepted.  Make sure to submit something before the deadline.
+
+\item Solutions must be typeset in \LaTeX.  If you need to draw any diagrams,
+  you may draw them by hand as long as they are embedded in the PDF.
+  We recommend that you use the source file for this assignment to get started, which can be accessed from \href{https://www.overleaf.com/read/jycrjmrdprmm#0c8372}{this} link.
+
+\item We encourage you to work with your classmates on the homework
+  problems, but also urge you to attempt all of the problems by
+  yourself first. \emph{If you do collaborate, you must write all
+    solutions by yourself, in your own words.}  Do not submit anything
+  you cannot explain.  Please list all your collaborators in your
+  solution for each problem by filling in the
+  \texttt{yourcollaborators} command.
+
+\item Finding solutions to homework problems on the web, or by asking
+  students not enrolled in the class is strictly forbidden.
+
+\end{itemize}
+\newpage
+
+\begin{prob}
+	(4 + 8 + 8 + 5 = 25 points) Stacking packages in a warehouse
+\end{prob}
+
+
+You are working in an Amazon warehouse and are designing a program to
+optimally store shipments, each of which is a rectangular prism (each
+face is a rectangle).  One piece of this program is to stack the
+maximum number of packages in a single stack.  All packages have the
+same height but may vary in length, breadth, and weight.  So, your
+program takes as input three lists $L$, $B$, and $W$, each of length
+$n$, where $L[i]$, $B[i]$, and $W[i]$ denote the length, breadth, and
+weight, respectively, of the $i$th package.
+
+Package $i$ can be placed on top of package $j$ if (i) $W[i] <
+W[j]$, and (ii) package $i$ can be oriented so that it is strictly
+smaller than package $j$ in each of the two dimensions.  For example,
+even though the package $i$ with $L[i] = 5$ and $B[i] = 1$ is longer
+than package $j$ with $L[j] = 2$ and $B[j] = 6$, $i$ can be stacked on
+$j$ by switching its length and breadth.
+
+\begin{itemize}
+	\item[{\bf (a)}] Describe an $O(1)$ time algorithm to determine
+	whether one package can be stacked on top of another. \\\\
+ First, we'll have an if-else case. If $W[i] < W[j]$, then it will continue into an if case. If the weight is not greater then it will return false. As for the nested, if case mentioned before, the condition will be $(L[i] < L[j] \land B[i] < L[j]) \lor (L[i] < B[j] \land B[i] < L[j])$ in which case it returns true. In essence, the code will preliminarily check that the weight is lower otherwise will return false. Then code will check that either the length and breadth are lower than the other respective length and breadth or that the length and breadth are lower than the other breadth and length, respectively.
+	
+	\item[{\bf (b)}] Suppose the packages are labeled $1$ through $n$ in
+	order of increasing weight (assume all weights are distinct).  Let
+	$\opt(i)$ denote the maximum number of packages you can stack using
+	packages $1$ through $i$, with package $i$ at the bottom of the
+	stack.  Give a recurrence to compute $\opt(i)$, and write the base
+	case for this recurrence.  Write a few sentences explaining why your
+	recurrence is correct. \\\\
+$OPT(i) = \max_{1 \leq j < i} (OPT(j) + 1)$ \\
+$OPT(1) = 1$ \\
+The recurrence calculates that can be stacked up to package $i$ taking into account all previous packages $j$ and adding $1$ for itself to the stack pile if $j$ can be stacked on top. It iterates through previous packages doing this. It will select the max value which is the optimized stack of packages for packages $1$ through $n$.
+
+\newpage
+
+	\item[{\bf (c)}] Using your recurrence, design a dynamic programming
+	algorithm {\em with pseudocode} to output the optimal set of packages to stack.  You may
+	use either a top-down or bottom-up approach.  Remember that your
+	algorithm needs to output the optimal set of packages, not only
+	their count.  Your algorithm may output the set of packages as a
+	list of indices.  The running time of your algorithm must be
+	polynomial in $n$. \\\\
+ Allow the algorithm from Part(a) to be called CanStack(i , j).
+
+\begin{algorithm}[H]
+\caption{Optimized Packageing}
+\Fn{OPT($W, B, L[1,\ldots,n]$)} \\ {
+  \If{$len(W) = 1$}{\Return $1$}
+  \Else{
+    $optimal[1*n]$ \\
+    $prev[0*n]$ \\
+    \For{$i = 2 \to n$} {
+    \For{$j = 1 \to i - 1$} {
+    \If{CanStack$(i, j)$}{
+    \If{$optimal[j] + 1 > optimal[i]$}{
+    $optimal[i] \gets optimal[j] + 1$\\
+    $prev[i] \gets prev[j]$}}}}
+    $a \gets$ index of optimal$[1\ldotsn].max$ \\
+    $ans[empty]$ \\
+    \While{$a \neq 0$}{
+    $ans.append(a)$ \\
+    $a \gets prev[a]$
+    }
+    \Return $ans.reverse()$}
+}
+\end{algorithm}
+Base case: There is one package where it just returns the index 1 which is the only package. \\
+Otherwise, it first initializes two lists of size $n$ one containing all $1$'s representing the current stack size of each package and one containing all $0$'s representing the previous package of the stack. Using a nested for loop, it checks for every next package, if all the previous packages can be stacked. If it indeed can be stacked then it checks the number of already stacked packages and sees that if it is more optimal to stack, it does so, while replacing the index in the prev list to maintain bookkeeping. After iterating through the entire list of packages, it then finds the max value in the optimal list and unravels the indices of the optimal stack by unraveling through the prev list.
+ 
+	\item[{\bf (d)}]
+	Analyze the running time and space usage of your algorithm. \\\\
+ The running time has a complexity of $O(n^{2})$. Two arrays are initialized and then the code runs through a nested for loop each of about the length $n$ that proceeds to execute a $O(1)$ process. This makes this part of the code $O(n^{2})$. Afterward, it uses the max function and then iterates through a list of size $n$. This leaves the algorithm dominated by run time of $O(n^{2})$. The space usage comprises lists of size $n$ leaving the space complexity to be $O(n)$.
+ 
+\end{itemize}
+
+\newpage
+
+\begin{prob}
+	(7 + 8 + 10 = 25 points) Nicest photos
+\end{prob}
+
+Alice would like to take nice photos of the Boston skyline. She records the height of the buildings in an array $h[1],\ldots, h[n]$, where $h_1$ is the height of the leftmost building and $h_n$ is the height of the rightmost building. Each photo cannot stray beyond the recorded skyline and it captures $k$ consecutive buildings. The score of a photo is the total height of all the building in the photo plus the tallest height. For example, if the heights are $5,2,9,1,7$ and $k=3$ then the best photo would capture $9,1,7$ with score $(9+1+7)+9 = 26$. Alice would like to find the set of non-overlapping photos with the maximum total score. For example, if the heights are $1,1,1,6,6,1,1,1,1$ and $k=3$ then the best set of photos consist of $1,1,6$ and $6,1,1$ for the total score of $28$.
+
+\begin{enumerate}[label={\bf (\alph*)}]
+	\item Let $score[i]$ denote the score of the photo capturing buildings from $i-k+1$ to $i$. Give an algorithm to compute $score[i]$ for all $i$ that runs in $O(nk)$ time.\\
+\begin{algorithm}[H]
+\caption{Score of Photo}
+\Fn{score($[i]$)}{
+    \If{$k \leq i$}{
+        \Return $\sum [i] + [i].\text{max}$
+    }
+    \Else{
+        score $\gets A[\text{empty}]$ \\
+        \For{$n \gets 1$ \KwTo $i - k + 1$}{
+            current-picture $\gets A[\text{empty}]$ \\
+            \For{$m \gets 1$ \KwTo $k$}{
+                current-picture.append($n + m - 1$)
+            }
+            score.append($\sum \text{current-picture} + \text{current-picture.sum}$)
+        }
+        \Return score
+    }
+}
+\end{algorithm}
+	
+	
+	\item Let $\opt[i]$ denote the maximum score for non-overlapping photos contained entirely between buildings from $1$ to $i$, inclusively. Give a recurrence for computing $\opt[i]$ and the base case(s). \\\\
+ $OPT[i] = score[i]$ \\
+ $OPT[i] = max(OPT[i - 1], OPT[i - k] + score[i])$ \\
+ Base Case: when $i$ is less than $k$, we can just take the score of the picture because there is only one picture to take. \\
+ Otherwise, when we can make multiple pictures we just take the maximum of the optimal picture where the current building is not in the picture compared to the picture that the current building is in. If we keep the current building then it fines the optimal for the buildings $k$ units away and if not we move to the next building. Since it iterates we'll ultimately reach the most optimal picture overall from all the buildings.
+
+ \newpage
+	\item Use your recurrence to design a dynamic programming algorithm {\em with pseudocode}, which takes as input the $h$ array and $k$, and computes the best total score as well as the photo locations. Give the running time of your algorithm. \\
+\begin{algorithm}[H]
+\caption{Best Pictures}
+\Fn{$OPT(h[1\ldots i], k)$:} { \\
+$non-mutate \gets score[h]$ \\
+$optimized \gets score[h]$ \\
+$prev \gets A[0*i]$ \\
+    \For{$n \gets k + 1 \KwTo i$}{
+        $optimized[n] \gets non-mutate[n - 2k + 1 \ldots n - k].max$ \\
+        $prev[n] \gets indexOf(non-mutate[n - 2k + 1 \ldots n - k].max)$
+    }
+    $a \gets indexOf(optimized.max)$ \\
+    $ans \gets A[\text{empty}]$ \\
+        \While{$a \neg 0$}{
+        ans.append(a) \\
+        $a \gets prev[a]$
+    }
+    \Return ans, optimized.max
+}
+\end{algorithm}
+
+	The runtime of computing the recurrence is $\Theta(n)$ because the loop is $\Theta(n/k)$ times the inner loop which is $\Theta(k)$ making it $\Theta(n)$. If we include the runtime of computing the scores in (a), the total runtime is $\Theta(nk)$.
+	
+	\item {\bf (0 bonus points)} Give an algorithm for part (a) with $O(n)$ runtime. Hint: a viable approach is divide and conquer. \\
+\begin{algorithm}[H]
+\caption{$O(n)$ Score Computing}
+\Fn{score($[i]$):}{ \\
+    \If{$i \leq k$}{
+        \Return $\sum [i] + [i].max$
+    }
+    \Else{
+        ans $\gets A[\text{empty}]$ \\
+        current $\gets i[1\ldots k]$ \\
+        ans.append($\sum current + current.max$) \\
+        \For{$n \gets k + 1 \KwTo i$}{
+            current.remove($1$) \\
+            current.append($i[n]$) \\
+            ans.append($\sum current + current.max$)
+        }
+        \Return ans
+    }
+}
+\end{algorithm}
+
+ 
+\end{enumerate}
+\newpage
+
+\begin{prob}{(6 + 7 + 6 + 6 = 25 points) Elegant subsequence}\end{prob}
+We are given an array $A[1,\ldots, n]$ of $n$ distinct integers sorted in increasing order. A subsequence of $A$ is a sequence that can be derived from $A$ by deleting some (or none) of the elements without changing the order of the remaining elements. A sequence is elegant if all the differences of the consecutive elements are all the same. For example, $1,4,7,10$ is elegant because the differences between consecutive elements are all $3$. We would like to find the longest elegant subsequence of $A$. For example, if $A = (1,3,4,7,8,10)$ then the longest elegant subsequence is $(1,4,7,10)$. For full credit, your algorithm should run in $O(n^2 \log n)$ time ($O(n^2)$ is possible).
+
+\begin{enumerate}[label=(\alph*)]
+	\item Let $L[i,j]$ be the length of the longest elegant subsequence whose last two indices are $i$ and $j$ where $i<j$. Describe a recurrence to compute $L[i,j]$ using $L[k,i]~\forall k<i$. Hint: Define $p[i,j]$ to be the index of the element in $A$ such that $A[p[i,j]] = 2A[i] - A[j]$ i.e. $A[p[i,j]] -A[i] = A[i] - A[j]$ (if such an element exists). \\\\
+$L[i, j] = 2$ \\
+$L[i, j] = 1 + L[j, p[i, j]]$ \\
+Base Case: When $j = n$ there are no further elements to search for that satisfy the condition or no elements after $j$ satisfy the condition. \\
+However, if there exists an element that satisfies the condition, then you add one to represent $i$ and recurse onto $j$ and the new element.
+	
+	\item Describe a dynamic programming algorithm {\em with pseudocode} to compute all $L[i,j]$. \\
+\begin{algorithm}[H]
+\caption{Longest Elegant Subsequence}
+\Fn{$L(i, j)$:}{
+    \If{$A[j] = A[n]$}{\Return [$i, j$]}
+    \Else{
+        $a \gets 2*A[j] - A[i]$ \\
+        ans $\gets A[\text{empty}]$ \\
+        \While{BinSearch($A[j + 1 \ldots n], a$)}{
+        ans.append($a$) \\
+        $a \gets 2a - A[j]$
+    }
+    \Return ans
+  }
+}
+\end{algorithm}
+Given two indices $i, j$ the code returns a base case of the two numbers if $j$ is the last number of the array. Otherwise, it calculates the number it must find after $j$ by multiplying $A[j]$ by 2 and subtracting $A[i]$ (Ex: $4*2 - 1 = 7$). Afterwords it will call on a binary search helper algorithm that will return a boolean of if this value exists. The code uses a while loop that continuously repeats this process by calculating the new value to find after successfully finding the current value it needs by mutating it and adding it to an accumulating list of the elegant subsequence. \\
+\begin{algorithm}[H]
+\caption{Binary Search}
+\Fn{BinSearch($A[1 \ldots n]$, $x$)}{ \\
+    \If{$len(A) = 1$}{\Return $A[1] == x$}
+    \Else{
+    $mid \gets A[\left\lfloor \frac{l + r}{2} \right\rfloor]$
+    \If{$A[mid] = x$}{
+            \Return true
+        }
+        \ElseIf{$A[mid] > x$}{
+            \Return BinSearch($A[1 \ldots mid - 1], x$)
+        }
+        \Else{
+            \Return BinSearch($A[mid + 1 \ldots n], x$)
+        }
+    }
+}
+\end{algorithm}
+ 
+	\item Describe how to find the longest elegant subsequence from the $L[i,j]$ you computed. \\\\
+ First, you initialize two empty lists: opt and current. You would run a nested for loop where for every $n \gets 1 \KwTo i -1$, you run for every $m \gets n + 1 \KwTo i$, in which you run $L[n, m]$. Using the subsequence you get from the $L$ function which is saved as the current list, you would compare its size to opt: replacing if it is a larger list. After you're done recursing through your iterations, you return your opt list as it is the largest elegant subsequence in the given array of numbers.
+
+	\item Analyze the running time and space usage of your algorithm. \\\\
+ The nested for loop is each comparable to length $n$ making the loop $O(n^2)$. In each iteration, you run a constant number Binary Searches ($O(\log(n))$ runtime) making the total loop run time $O(n^2\log(n))$. For the space usage, you have two lists comparable to length $n$ making the complexity $O(n)$.
+	
+\end{enumerate}
+
+\newpage
+
+\begin{prob}
+	(6 + 7 + 6 + 6 = 25 points) Resource reservation in video transmission
+\end{prob}
+
+Consider the following resource reservation problem arising in video
+transmission.  Suppose we have a video that is a sequence of $n$
+frames.  We are given an array $s[0\ldots n-1]$: frame $i$ requires
+the reservation of at least $s[i]$ units of bandwidth along the
+transmission link.  Since reserving resources separately for each
+frame may incur a significant overhead, we would like to partition the
+video into at most $k$ {\em segments}\/ (where $k$ is usually much
+smaller than $n$), and then reserve bandwidth for each segment.  Note
+that each segment is simply an interval of contiguous frames and that
+the segments may be of different lengths.
+
+The amount of bandwidth that we need to reserve for a segment is the
+maximum, over all frames in the segment, of the bandwidth required for
+the frame.  Formally put, for a given interval of frames $I$, the
+bandwidth $B(I)$ required for the segment equals $\max_{i \in I}
+s[i]$.
+
+A segmentation of the video into $k$ segments is a sequence of $k-1$
+integers $0 < p[0] < p[1] < \ldots < p[k-2] < k$ indicating that the
+segments are given by the $k$ intervals $I_0 = [0\ldots p[0]-1], I_1 =
+[p[0] \ldots p[1]-1], \ldots, I_{k-1} = [p[k-1]\ldots k-1]$.  The {\em
+	cost\/} of the segmentation is the total bandwidth required, which
+is the following:
+\[
+\sum_{0 \le i < k} |I_i| \cdot B(I_i)
+\]
+where $|I_i|$ is the number of frames in segment $S_i$.
+
+\noindent {\bf Example:} Suppose $n = 10$, the array $s = [3, 5, 2, 9,
+5, 6, 7, 1, 4, 11]$, and $k = 3$.  If we consider the segmentation
+$[0-2], [3-6], [7-9]$, the total bandwidth requirement would be
+\[
+5 \times 3 + 9 \times 4 + 11 \times 3 = 84.
+\]
+On the other hand, if we choose the segmentation $[0-3], [4-8],
+[9-9]$, the total bandwidth requirement would be
+\[
+9 \times 4 + 7 \times 5 + 11 = 82.
+\]
+
+Your goal is to design a dynamic programming algorithm that takes
+input the $n$ values $s[0], s[1], \ldots, s[n-1]$, and the positive
+integer $k \le n$ and computes a segmentation which has minimum cost.
+
+\begin{itemize}
+	\item[{\bf (a)}] Let $\opt(i,m)$ denote the minimum cost for
+	segmenting frames $0$ through $i$ using $m$ segments.  Give a
+	recurrence to compute $\opt(i,m)$, and write the base case(s) for
+	this recurrence.  Write a few sentences explaining why your
+	recurrence is correct. \\\\
+ $OPT(i, 1) = cost(0 \ldots i)$ \\
+$OPT(i, m) = \min_{0 \leq j < i} (OPT(j, m - 1) + cost(j + 1, i))$	\\
+Base Case: When you want only one segment you can just return the cost of all the frames. \\
+Otherwise, you can recur down the other frames and take the minimum amount that would result in grouping $i - j$ frames together. Adding this segment to then the optimal assortment of the other recursively called frames would bring the optimal cost.
+
+\newpage
+ 
+	\item[{\bf (b)}] Using your recurrence, design a dynamic programming
+	algorithm {\em with pseudocode}, which takes as input the $s$ array and $k$, and outputs
+	the optimal cost for segmenting the video into $k$ segments. You may
+	use either a top-down or bottom-up approach.  The output of your
+	algorithm is a single number.  The running time of your algorithm
+	must be polynomial in $n$. \\\\
+\begin{algorithm}[H]
+\caption{Minimum Bandwidth}
+\Fn{OPTBandwidth($s[1 \ldots n]$, $k$)}{ \\
+    \If{$k = 1$}{\Return score[$s$]}
+    \Else{
+    $dp[s.size + 1][k + 1]$ \\
+    All $dp[0][m]$ and $dp[i][0]$ are 0 \\
+    \For{$m \gets 1 \KwTo k$}{
+        \For{$i \gets m \KwTo s.size$}{
+            \If{$m = 1$}{$dp[i][m] \gets score(s[0 \ldots i - 1])$}
+            \Else{
+                $current \gets dp[i - 1][m - 1] + s[i - 1]$ \\
+                \For{$j \gets m \KwTo i - 1$}{
+                    \If{$score(s[j - 1 \ldots i - 1]) + dp[j - 1][m - 1]$}{
+                        $current \gets score(s[j - 1 \ldots i - 1]) + dp[j - 1][m - 1]$
+                        }
+                    }
+                $dp[i][m] \gets current$
+                }
+            }
+        }
+    \Return $dp[i][m]$
+    }
+}
+\end{algorithm} 
+
+\begin{algorithm}[H]
+\caption{Score}
+\Fn{score($s[1 \ldots n]$)}{ \\
+    \Return s.max * s.size
+}
+\end{algorithm} 
+The algorithm uses the principles of a dynamic programming table using saved values to decrease the time complexity of making useless calculations. It creates a border of $0$ and replaces the first column with the base case. On the other columns, it starts the index by incrementing one index further down because it is guaranteed that the number of frames is greater than the number of segments. Using this it parses through the index down to determine what numbers to add together (aka where to create a new segment). By returning the bottom right-most index it returns the calculated sum of the most optimal cost using $k$ segmentations and all $s[\ldots]$ frames.
+
+	\item[{\bf (c)}] Analyze the running time and space usage of your algorithm. \\\\
+ Using a triple nested for-loop to complete the dynamic programming table, the run time of the table is $O(n^{2} * k)$. This is because the outer loop runs $k$ times, the second loops through about $n$ times, and the innermost loop runs about $n - 1$ times. The space usage would just be $O(nk)$ because it uses a dynamic programming table the size of $n + 1$ by $k + 1$.
+	
+	\item[{\bf (d)}] Enhance your algorithm of part
+	(b) to return the optimal segmentation, not just the optimal cost.
+	The output of your algorithm can be the array $p$ giving the
+	segmentation. \\
+\begin{algorithm}[H]
+\caption{Minimum Bandwidth Returning Array}
+\Fn{OPTBandwidthArray($s[1 \ldots n]$, $k$)}{ \\
+    \If{$k = 1$}{\Return $s[]$}
+    \Else{
+    $dp[s.size + 1][k + 1]$ \\
+    $segments[s.size + 1][k + 1]$ \tcp*[r]{Contains split points indexes}
+    All $dp[0][m]$ and $dp[i][0]$ are 0, same for $segments[][]$ but $A[0]$} \\
+    \For{$m \gets 1 \KwTo k$}{
+        \For{$i \gets m \KwTo s.size$}{
+            \If{$m = 1$}{$dp[i][m] \gets score(s[0 \ldots i - 1])$\\
+                        $segments[i][m] \gets A[i]$}
+            \Else{
+                $current-splits \gets A[segments[i - 1], i]$
+                $current \gets dp[i - 1][m - 1] + s[i - 1]$ \\
+                \For{$j \gets m \KwTo i - 1$}{
+                    \If{$score(s[j - 1 \ldots i - 1]) + dp[j - 1][m - 1]$}{
+                        $current \gets score(s[j - 1 \ldots i - 1]) + dp[j - 1][m - 1]$ \\
+                        $current-splits \gets A[segments[j - 1][m - 1], i]$
+                        }
+                    }
+                $dp[i][m] \gets current$ \\
+                $segments[i][m] \gets current-splits$
+                }
+            }
+        }
+    \Return segments of $s[]$ that end with each each index of $segments[] - 1$
+    }
+}
+\end{algorithm} 
+This algorithm maintains the same run time of $O(n^{2} * k)$ and space usage of $O(nk)$ because the run time is not changed at all (only trivially with $O(1)$ functions) and the space usage is increased by another $n + 1$ by $k + 1$ array which doesn't change the Big-O of the space usage. The way it works is that when it calculates the optimal cost, it bookkeeps by creating an array that contains the indices + 1 and so it uses these indices to create the different segments from $s[]$.
+ 
+\end{itemize}
+
+\end{document}
