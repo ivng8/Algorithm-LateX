@@ -1,0 +1,392 @@
+\documentclass[11pt]{article}
+
+\newcommand{\yourname}{Ivan Ng}
+\newcommand{\yourcollaborators}{}
+
+\def\comments{0}
+
+%format and packages
+
+%\usepackage{algorithm, algorithmic}
+
+\usepackage{ulem}
+\usepackage{epsfig, graphicx}
+\usepackage[noend]{algpseudocode}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{palatino}
+	\DeclareMathAlphabet{\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet{\mathtt}{bold}{OT1}{cmtt}{bx}{n}
+	\DeclareMathAlphabet{\mathsf}{OT1}{cmss}{m}{n}
+	\SetMathAlphabet{\mathsf}{bold}{OT1}{cmss}{bx}{n}
+	\renewcommand*\ttdefault{cmtt}
+	\renewcommand*\sfdefault{cmss}
+	\renewcommand{\baselinestretch}{1.05}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{DarkGreen}{rgb}{0.15,0.5,0.15}
+\definecolor{DarkRed}{rgb}{0.6,0.2,0.2}
+\definecolor{DarkBlue}{rgb}{0.2,0.2,0.6}
+\definecolor{DarkPurple}{rgb}{0.4,0.2,0.4}
+\usepackage{listings}
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+	linktocpage=true,
+	colorlinks=true,				% false: boxed links; true: colored links
+	linkcolor=DarkBlue,		% color of internal links
+	citecolor=DarkBlue,	% color of links to bibliography
+	urlcolor=DarkBlue,		% color of external links
+}
+\usepackage{tcolorbox}
+\usepackage[ruled,vlined]{algorithm2e}
+
+%enclosure macros
+\newcommand{\paren}[1]{\ensuremath{\left( {#1} \right)}}
+\newcommand{\bracket}[1]{\ensuremath{\left\{ {#1} \right\}}}
+\renewcommand{\sb}[1]{\ensuremath{\left[ {#1} \right\]}}
+\newcommand{\ab}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+
+%probability macros
+\newcommand{\ex}[2]{{\ifx&#1& \mathbb{E} \else \underset{#1}{\mathbb{E}} \fi \left[#2\right]}}
+\newcommand{\pr}[2]{{\ifx&#1& \mathbb{P} \else \underset{#1}{\mathbb{P}} \fi \left[#2\right]}}
+\newcommand{\var}[2]{{\ifx&#1& \mathrm{Var} \else \underset{#1}{\mathrm{Var}} \fi \left[#2\right]}}
+
+%useful CS macros
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\pmo}{\{\pm1\}}
+\newcommand{\getsr}{\gets_{\mbox{\tiny R}}}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\eqand}{\qquad \textrm{and} \qquad}
+\newcommand{\ind}[1]{\mathbb{I}\{#1\}}
+\newcommand{\sslash}{\ensuremath{\mathbin{/\mkern-3mu/}}}
+
+%info theory macros
+\newcommand{\SD}{\mathit{SD}}
+\newcommand{\sd}[2]{\SD\left( #1 , #2 \right)}
+\newcommand{\KL}{\mathit{KL}}
+\newcommand{\kl}[2]{\KL\left(#1 \| #2 \right)}
+\newcommand{\CS}{\ensuremath{\chi^2}}
+\newcommand{\cs}[2]{\CS\left(#1 \| #2 \right)}
+\newcommand{\MI}{\mathit{I}}
+\newcommand{\mi}[2]{\MI\left(~#1~;~#2~\right)}
+
+%mathbb
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+%mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\hs}{\hspace{0.2in}}
+%theorem macros
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+	\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{theorem}
+\newtheorem{prob}{Problem}
+
+\newcommand{\opt}{\mbox{{\sc Opt}}}
+
+\newcommand{\course}{CS 3000: Algorithms \& Data}
+\newcommand{\semester}{Spring 2024}
+
+\newcommand{\hwnum}{5}
+\newcommand{\hwdue}{Friday March 22 at 11:59pm via Gradescope}
+
+\newif\ifsolution
+
+\solutiontrue
+%\solutionfalse
+\ifsolution
+\newcommand{\solution}[1]{{\medskip\noindent\color{DarkBlue}\textbf{Solution:} {#1}}}
+\else
+\newcommand{\solution}[1]{}
+\fi
+
+\begin{document}
+{\Large
+\begin{center} \course\ --- \semester\ \end{center}}
+{\large
+\vspace{10pt}
+\noindent Homework~\hwnum \vspace{2pt}\\
+Due~\hwdue}
+
+\vspace{15pt}
+\bigskip
+{\large
+\noindent Name: \yourname \vspace{2pt}\\ Collaborators: \yourcollaborators}
+
+\vspace{15pt}
+\begin{itemize}
+
+\item
+  Make sure to put your name on the first page.  If you are using the
+  \LaTeX~template we provided, then you can make sure it appears by
+  filling in the \texttt{yourname} command.
+
+\item This homework is due~\hwdue.  No late assignments will be accepted.  Make sure to submit something before the deadline.
+
+\item Solutions must be typeset in \LaTeX.  If you need to draw any diagrams,
+  you may draw them by hand as long as they are embedded in the PDF.
+  We recommend that you use the source file for this assignment to get started, which can be accessed from \href{https://www.overleaf.com/read/dvzgqddrmmmd#26c18b}{this} link.
+
+\item We encourage you to work with your classmates on the homework
+  problems, but also urge you to attempt all of the problems by
+  yourself first. \emph{If you do collaborate, you must write all
+    solutions by yourself, in your own words.}  Do not submit anything
+  you cannot explain.  Please list all your collaborators in your
+  solution for each problem by filling in the
+  \texttt{yourcollaborators} command.
+
+\item Finding solutions to homework problems on the web, or by asking
+  students not enrolled in the class is strictly forbidden.
+
+\end{itemize}
+\newpage
+
+\begin{prob}
+	(25 points) Cycles
+\end{prob}
+
+ In an undirected graph, a cycle is defined as a sequence of unique vertices
+ $u_1, u_2, \ldots, u_l$ such that each vertex has an edge to the next, i.e.\ there is an edge between $u_i$ and $u_{i+1}$ for $1 \leq i \leq l-1$, and an edge between $u_1$ and $u_l$.
+ Given an undirected graph $G$ with adjacency list access:
+ \begin{enumerate}
+     \item \textbf{(5 Points)} Provide an algorithm based on depth-first search that either finds a cycle or reports that there are no cycles in the graph. (Doing the next part would give you full credit for this part.)
+
+\begin{algorithm}[H]
+\caption{Finding Cycles}
+\Fn{hasCycle($adjList[v_1 \ldots v_n]$)} \\ {
+\ForEach{$\text{node}$ in $adjList$}{
+    $visited \gets []$ \\
+    $ans \gets \text{DFS}(adjList, \text{ node }, visited, \text{ null})$\;
+    \If{ans $\neq$ null}{
+      \KwRet ans
+    }
+  }
+  \KwRet no cycle found
+}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Depth-First Search}
+\Fn{DFS($adjList[v_1 \ldots v_n], \text{ node }, visited, \text{ parent}$)} \\ {
+    $visited.\text{append}(\text{node})$\;
+    \ForEach{$\text{neighbor}$ in $adjList[\text{node}]$}{
+        \If{$\lnot visited.\text{contains}(\text{neighbor})$}{
+            \KwRet DFS($adjList, \text{ neighbor }, visited,$ node)
+        }
+        \If{neighbor $\neq$ parent}{
+            \KwRet visited
+        }
+    }
+    \KwRet null
+}
+\end{algorithm}
+The algorithm is correct because it performs DFS starting from each vertex in the graph. From each vertex, it recursively starts a DFS search from each of its neighbors while passing on an accumulated list of the already visited vertices. Upon finding that a neighbor has already been visited this indicates a possible loop. We also bookkeep the parent node of the node we are currently parsing since it is an undirected graph, two nodes are each other's neighbors thus possibly prematurely finding an invalid cycle. Since the algorithm will parse every node and edge once the algorithm will run in $O(n + m)$.
+\newpage
+
+     \item \textbf{(20 points)} A cycle is minimal if no strict subset of its vertices form a cycle. Provide an algorithm based on depth-first search that finds a minimal cycle or reports that there are no cycles in the graph.
+ \end{enumerate}
+\begin{algorithm}[H]
+\caption{Minimal Cycle}
+\Fn{minimalCycle($adjList[v_1 \ldots v_n]$)} \\ {
+    $ans \gets$ hasCycle($adjList$) \\
+    \If{$ans$ has no cycle} {
+        \KwRet has no cycle
+    }
+    \Else{
+        \KwRet minimize($adjList, ans$)
+    }
+}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Minimizing Cycle}
+\Fn{minimizing($list$)} \\ {
+    $ans \gets$ hasCycle($list$) \\
+    \If{$ans = list$}{
+        \KwRet $ans$
+    }
+    \Else{\KwRet minimizing($ans$)}
+}
+\end{algorithm}
+The algorithm is correct because it performs the previously proved cycle-detecting algorithm first to see if a cycle exists at all. If a cycle does exist, it will send it to a recursive function that will find the minimal cycle. It does this by performing the cycle-detecting algorithm on the cycle that was sent to it in the first place. It then detects if the cycle that was found is equal to the cycle itself. If it is indeed equal then that means that the cycle is already minimal and if it isn't then it will recurse the minimizing function on the new cycle. The algorithm still runs in $O(n + m)$ since it only recursively calls on the DFS cycle-finding algorithm. \\
+
+ Prove correctness and analyze the run time. The algorithms should run in $O(n + m)$ time.
+
+\newpage
+
+\begin{prob}
+    (25 points) Longest Paths in DAGs
+\end{prob}
+
+
+Given adjacency list access to a directed acyclic graph, present an algorithm that finds the longest directed path in the graph.
+A directed path is a sequence of distinct vertices $u_1, u_2, \ldots, u_l$
+such that for $1 \leq i \leq l - 1$ there as an edge from $u_i$ to $u_{i+1}$.
+(Hint: use the topological order).
+\begin{algorithm}[H]
+\caption{Longest Path in DAG}
+\Fn{longestPath($list$)} \\ {
+    $list$ \gets topologicalSort($list$) \\
+    $dp \gets [0] * list.size()$ \\
+    $index \gets [1, 2, \ldots list.size()]$ \\
+    \ForEach{node in $list$}{
+        \ForEach{child in $list[\text{node}]$}{
+            $replacementIndex \gets indexOf(max(dp[\text{child}], dp[\text{node} + 1]))$ \\
+            $dp[\text{child}] \gets max(dp[\text{child}], dp[\text{node} + 1])$ \\
+            $index[\text{child}] \gets replacementIndex$
+        }
+    }
+    $ans = \text{empty list}$ \\
+    $current = indexOf(max(dp))$ \\
+    $ans.add(dp[current])$ \\
+    \While{$current$ has parents}{
+        $current \gets index[current]$
+        $ans.add(dp[current])$
+    }
+    \Return $ans.reverse()$
+}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Topological Ordering}
+\Fn{topologicalSort($list$)} \\ {
+    $inDegree \gets Hashmap<\text{node, int}>(0 \text{ for each node})$ \\
+    $ans \gets []$ \\
+    \ForEach{node in $list$}{
+        \ForEach{neighbor in $list[\text{node}]$}{
+            $inDegree[neighbor] += 1$
+        }
+    }
+    \While{$\lnot inDegree.isEmpty()$}{
+        \ForEach{node in $list$}{
+            \If{$inDegree.get(\text{node}) == 0$}{
+                \ForEach{neighbor in $list[\text{node}]$}{
+                    $inDegree[neighbor] -= 1$
+                }
+                $inDegree.remove(\text{node})$ \\
+                $ans.add(\text{node})$
+            }
+        }
+    }
+    \Return $ans$
+}
+\end{algorithm}
+First topologically sorts the adjacency list by first mapping how many edges point to each node. As you remove the nodes with 0 edges pointing into them and removing the edges that those nodes point with, you end up with your topologically ordered list. Then you use this list in a dynamic-programming-based DFS that uses another list to backward trace the longest path. The way the list works is by adding a node to the length of a node it points to if it is longer than the other options. Afterward, it takes the highest number and reconstructs that path.
+\newpage
+
+\begin{prob}{
+(25 points) $k$-Divisible Paths}\end{prob}
+
+Given adjacency list access to a \emph{directed} graph $G$, two vertices $s$ and $t$, and an integer $k \geq 1$, give an algorithm that finds a path from $s$ to $t$ such that the number of edges in the path is divisible by $k$, or concludes that no such path exists. Prove correctness and analyze the run time. The algorithm should run in $O(k(n + m))$ time. \\
+\begin{algorithm}[H]
+\caption{k-Divisable Paths}
+\Fn{kPathfinder($list, s, t, k$)} \\ {
+        \ForEach{node in $list[s]$}{
+            $visited \gets [s]$ \\
+            $ans \gets$ DFS($list, \text{node}, t, visited, k$)
+            \If{$ans \neq null$}{
+                \Return $ans$
+            }
+        }
+        \Return no cycle found
+}
+\end{algorithm}
+\begin{algorithm}[H]
+\caption{DFS K-Finder}
+\Fn{kDFS($list, \text{node}, t, visited, k$)} \\ {
+        $visited.add(\text{node})$
+        \ForEach{neighbor in $list[\text{node}]$}{
+            \If{neighbor $== t$}{
+                \If{$visited.size() + 1 \% k == 0$}{
+                    $visited.add(\text{neighbor})$ \\
+                    \Return $visited$
+                }
+            }
+            \Else{
+                \Return DFS($list, \text{neighbor}, t, visited, k$)
+            }
+        }
+        \Return null
+}
+\end{algorithm}
+\textbf{Correctness: } The algorithm is correct because it uses $s$ as a starting point. Then it uses a recursive search algorithm on every neighbor that $s$ points to until it finds $t$. When it finds $t$ it verifies that the path is divisible by $k$. Therefore, the algorithm only returns a path on these two conditions. \\\\
+\textbf{Run Time: } The algorithm runs on $O(k(n + m))$ because it searches through the graph multiple times parsing through (in worst case) each node and edge once per iteration.
+
+\newpage
+
+\begin{prob}
+	(25 points) Graph Coloring
+\end{prob}
+
+Given a graph $G=(V, E)$ a $k$-coloring of $G$ is an assignment of colors from $\{1, \ldots, k\}$ to the vertices of $G$ such that any two adjacent vertices in $G$ receive different colors.
+
+Let $d$ be the maximum degree in graph $G$, i.e., $d = \max_v \deg(v)$. Design an algorithm that finds a $(d+1)$-coloring of $G$ in $O(n+m)$ time where $n = |V|$ and $m = |E|$. Provide the pseudo-code of your algorithm, prove its correctness, and analyze its running time.
+
+\begin{algorithm}[H]
+\caption{Graph Coloring}
+\Fn{kcolor($G$)} \\ {
+    $colors = [1, 2, \ldots d + 1]$ \\
+    \ForEach{vertex in $G$}{
+        $notUsable \gets [] $
+        \ForEach{neighbor in $G(\text{vertex})$}{
+            \If{neighbor has a color}{
+                $notUsable.add(\text{neighbor.color})$
+            }
+        }
+        \ForEach{color in $colors$}{
+            \If{$\lnot notUsable$.contains(color)} {
+                $vertex.color \gets color$
+            }
+        }
+    }
+    \Return $G$
+}
+\end{algorithm}
+
+\textbf{Correctness: } The algorithm is correct because first it parses through every vertex in the graph. This guarentees that every vertex in the graph is assigned a color. Second, it collects the neighbors of each vertex everytime it iterates to determine which colors to remove when assigning a color to the current vertex. These two axioms will guarentee appropriately coloring a graph. \\\\
+
+\textbf{Run Time: } The algorithm runs in $O(n + m)$ because first it parses through each vertex once. During each iteration it will explore its unique edges to the other neighbors once. This makes the run time $O(n + m)$.
+
+\end{document}
