@@ -1,0 +1,377 @@
+\documentclass[11pt]{article}
+
+\newcommand{\yourname}{Ivan Ng}
+\newcommand{\yourcollaborators}{}
+
+\def\comments{0}
+
+%format and packages
+
+%\usepackage{algorithm, algorithmic}
+
+\usepackage{ulem}
+\usepackage{epsfig, graphicx}
+\usepackage[noend]{algpseudocode}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{palatino}
+	\DeclareMathAlphabet{\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet{\mathtt}{bold}{OT1}{cmtt}{bx}{n}
+	\DeclareMathAlphabet{\mathsf}{OT1}{cmss}{m}{n}
+	\SetMathAlphabet{\mathsf}{bold}{OT1}{cmss}{bx}{n}
+	\renewcommand*\ttdefault{cmtt}
+	\renewcommand*\sfdefault{cmss}
+	\renewcommand{\baselinestretch}{1.05}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{DarkGreen}{rgb}{0.15,0.5,0.15}
+\definecolor{DarkRed}{rgb}{0.6,0.2,0.2}
+\definecolor{DarkBlue}{rgb}{0.2,0.2,0.6}
+\definecolor{DarkPurple}{rgb}{0.4,0.2,0.4}
+\usepackage{listings}
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+	linktocpage=true,
+	colorlinks=true,				% false: boxed links; true: colored links
+	linkcolor=DarkBlue,		% color of internal links
+	citecolor=DarkBlue,	% color of links to bibliography
+	urlcolor=DarkBlue,		% color of external links
+}
+\usepackage{tcolorbox}
+\usepackage[ruled,vlined]{algorithm2e}
+
+
+%enclosure macros
+\newcommand{\paren}[1]{\ensuremath{\left( {#1} \right)}}
+\newcommand{\bracket}[1]{\ensuremath{\left\{ {#1} \right\}}}
+\renewcommand{\sb}[1]{\ensuremath{\left[ {#1} \right\]}}
+\newcommand{\ab}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+
+%probability macros
+\newcommand{\ex}[2]{{\ifx&#1& \mathbb{E} \else \underset{#1}{\mathbb{E}} \fi \left[#2\right]}}
+\newcommand{\pr}[2]{{\ifx&#1& \mathbb{P} \else \underset{#1}{\mathbb{P}} \fi \left[#2\right]}}
+\newcommand{\var}[2]{{\ifx&#1& \mathrm{Var} \else \underset{#1}{\mathrm{Var}} \fi \left[#2\right]}}
+
+%useful CS macros
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\pmo}{\{\pm1\}}
+\newcommand{\getsr}{\gets_{\mbox{\tiny R}}}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\eqand}{\qquad \textrm{and} \qquad}
+\newcommand{\ind}[1]{\mathbb{I}\{#1\}}
+\newcommand{\sslash}{\ensuremath{\mathbin{/\mkern-3mu/}}}
+
+%info theory macros
+\newcommand{\SD}{\mathit{SD}}
+\newcommand{\sd}[2]{\SD\left( #1 , #2 \right)}
+\newcommand{\KL}{\mathit{KL}}
+\newcommand{\kl}[2]{\KL\left(#1 \| #2 \right)}
+\newcommand{\CS}{\ensuremath{\chi^2}}
+\newcommand{\cs}[2]{\CS\left(#1 \| #2 \right)}
+\newcommand{\MI}{\mathit{I}}
+\newcommand{\mi}[2]{\MI\left(~#1~;~#2~\right)}
+
+%mathbb
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+%mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\hs}{\hspace{0.2in}}
+%theorem macros
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+	\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{theorem}
+\newtheorem{prob}{Problem}
+
+\newcommand{\opt}{\mbox{{\sc Opt}}}
+
+\newcommand{\course}{CS 3000: Algorithms \& Data}
+\newcommand{\semester}{Spring 2024}
+
+\newcommand{\hwnum}{6}
+\newcommand{\hwdue}{Thursday April 18th at 11:59pm via Gradescope}
+
+\newif\ifsolution
+
+\solutiontrue
+%\solutionfalse
+\ifsolution
+\newcommand{\solution}[1]{{\medskip\noindent\color{DarkBlue}\textbf{Solution:} {#1}}}
+\else
+\newcommand{\solution}[1]{}
+\fi
+
+\begin{document}
+{\Large 
+\begin{center} \course\ --- \semester\ \end{center}}
+{\large
+\vspace{10pt}
+\noindent Homework~\hwnum \vspace{2pt}\\
+Due~\hwdue}
+
+\vspace{15pt}
+\bigskip
+{\large
+\noindent Name: \yourname \vspace{2pt}\\ Collaborators: \yourcollaborators}
+
+\vspace{15pt}
+\begin{itemize}
+
+\item
+  Make sure to put your name on the first page.  If you are using the
+  \LaTeX~template we provided, then you can make sure it appears by
+  filling in the \texttt{yourname} command.
+
+\item This homework is due~\hwdue.  No late assignments will be accepted.  Make sure to submit something before the deadline.
+
+\item Solutions must be typeset in \LaTeX.  If you need to draw any diagrams,
+  you may draw them by hand as long as they are embedded in the PDF.
+  We recommend that you use the source file for this assignment to get started, which can be accessed from \href{https://www.overleaf.com/read/fqgdxsdsggcq#2ead97}{this} link.
+
+\item We encourage you to work with your classmates on the homework
+  problems, but also urge you to attempt all of the problems by
+  yourself first. \emph{If you do collaborate, you must write all
+    solutions by yourself, in your own words.}  Do not submit anything
+  you cannot explain.  Please list all your collaborators in your
+  solution for each problem by filling in the
+  \texttt{yourcollaborators} command.
+
+\item Finding solutions to homework problems on the web, or by asking
+  students not enrolled in the class is strictly forbidden.
+
+\end{itemize}
+\newpage
+
+\begin{prob}[\textbf{25 Points -- Same Graph Different Weight Functions}]
+We are given a connected undirected graph $G=(V,E)$ such that $|E| > |V|$. 
+
+Let $w:E\rightarrow (1,\infty)$ be such that $w(e)\not=w(e')$ for $e\neq e'$. Also for every $e \in E$, let $w'=w(e)-1$ and let $w''(e)=w(e)/2$.
+
+\begin{enumerate}
+
+    \item (\textbf{5 Points}) Prove that  there exists exactly one $MST$  of $G(V,E)$ with
+      respect to weights $w$; exactly one  $MST$ of $G(V,E)$ with respect to
+      weights $w'$;  and  exactly  one  $MST$  of  $G(V,E)$  with  respect  to
+      weights $w''$. \\\\
+      Since all $E$ is greater than $1$ and $w(e)\not=w(e')$ for $e\neq e'$ that means that all $E$ are positive and distinct. If all edge weights are distinct, then there can only be one minimum weight edge connecting any two vertices. This means that there can only be one possible combination of edges that will result in the minimum total weight, making the MST unique. This can be proved using the greedy contradiction arguement if you were to use Kruskal's algorithm with the condition of distinct weights. Suppose there are two distinct $MST$ called $A$ and $B$, meaning that there is at least one difference in edges. If this edge $e_{1}$ is in $A$ then if it were to be put in $B$ it would make a cycle. That means there is an edge $e_{2}$ in the cycle that is not in $A$. For arguments sake we'll assume $e_{1}$ is less than $e_{2}$ since edges are distinct. That means that replacing $e_{2}$ with $e_{1}$ will yield a tree with lower cost than $B$ contradicting that it is a $MST$. This means that there can only be one $MST$ found for the graph for $w$. \\
+      Since $w'=w(e)-1$, it means that for every corresponding edge in $w$ its weight is lowered by $1$. This still holds the axiom that all $E$ are positive and distinct as $w':E\rightarrow (0,\infty)$. Also, the ordering of the edges will remain the same. An example proving this would be if $w(e)=[2, 3, 4, 5, 6]$ then $w'(e)=[1, 2, 3, 4, 5]$. This means that the $MST$ for $w'$ will be the same edges used in $w$ but just with different weights. \\
+      Since $w''(e)=w(e)/2$, it means that for every corresponding edge in $w$ its weight is halved. This still holds the axiom that all $E$ are positive and distinct as $w'':E\rightarrow (\frac{1}{2},\infty)$. Also, ordering of the edges will remain the same. An example proving this would be if $w(e)=[2, 4, 6, 8]$ then $w''(e)=[1, 2, 3, 4]$. This means that the $MST$ for $w''$ will be the same edges used in $w$ but just with different weights. 
+
+    \item  (\textbf{10 Points}) Let  $T_w,T_{w'},T_{w''}\subseteq  E$   be  the  $MST$s  of
+      $G(V,E)$ with respect to weights functions $w,w'$  and $w''$ respectively.  Decide whether each
+      of the following  statements are correct. Give a proof  if it is
+      true, or a counter example if it is not.
+
+      \begin{enumerate}
+        \item $T_{w'} = T_{w''}$. \\\\
+        This statement is true. Both $T_{w'}$ and $T_{w''}$ represent the minimum spanning tree of the graph $G$ with respect to different weight functions $w'$ and $w''$. Since the transformations $w \rightarrow w'$ and $w \rightarrow w''$ preserve the relative ordering of edge weights, the minimum spanning tree is determined by the order of the weights. Since both transformations preserve this order, they will yield the same minimum spanning tree.
+
+    \newpage
+    
+        \item Let $e_{min} = \arg\min_{e} w(e)$ and let $e_{max} = \arg\max_{e} w(e)$. Then $e_{min}$ belongs to $T_w$ and $e_{max}$ does not belong to $T_w$. \\\\
+        This is false. If an edge is the only edge connecting it to the rest of the graph and it is also the highest weight it must still be added to the $MST$ to ensure all the vertices are connected. \\
+        Counter Example:
+        Let's say a graph has edges:
+        $w_{ab}=2$ \\
+        $w_{ac}=3$ \\
+        $w_{ad}=4$ \\
+        $w_{bc}=6$ \\
+        $w_{be}=7$ \\
+        $w_{ce}=5$ \\
+        $w_{cd}=9$ \\
+        $w_{de}=8$ \\
+        $w_{df}=10$ \\
+        As you can tell the only edge connecting $f$ to the graph is $df$ which is the highest weight so it must be in the $MST$.
+
+      \end{enumerate}
+
+    \item (\textbf{10 Points}) We are given two nodes $u,v\in V$. Assume that there exists exactly one shortest path from $u$ to $v$ in $G$ with respect to $w$; exactly one shortest path from $u$ to $v$ in $G$ with respect to $w'$; and exactly one shortest path from $u$ to $v$ in $G$ with respect to $w''$. Let $P_w(u,v),P_{w'}(u,v),P_{w''}(u,v)\subseteq E$ be these shortest paths from $u$ to $v$ with respect to $w,w'$ and $w''$. Decide whether each of the following statements are correct. Give a proof if it is true, or a counter example if it is not.
+
+
+\begin{enumerate}
+\item $P_{w}(u,v) = P_{w'}(u,v)$. \\\\
+This is not true. If an alternate path has enough edges, after the transformation, the weight can end up less than the original path. \\
+Counter Example: \\
+Lets say a graph has edges: \\
+$w_{ua}=2$ \\
+$w_{ab}=3$ \\
+$w_{bc}=4$ \\
+$w_{cv}=5$ \\
+$w_{ud}=6$ \\
+$w_{dv}=7$ \\
+This means there are two paths: $uabcv$ and $udv$ making the weights $14$ and $13$ respectively. But for $w'$, $uabcv$ and $udv$ make the weights $10$ and $11$ respectively. This means that while $P_{w}=udv$, $P_{w'}=uabcv$ meaning that the paths have changed after the transformation.
+\item $P_{w}(u,v) = P_{w''}(u,v)$. \\\\
+This is true. Since the edges are all reduced proportionally by half, the paths are all also reduced by half for $w''$. That means that the difference in weight between every path will decrease but will retain its ordering from least to greatest. Seeing this, the shortest path from $u$ to $v$ will remain the same across this transformation.
+\end{enumerate}
+\end{enumerate}
+\end{prob}
+
+\clearpage
+
+
+\begin{prob}[\textbf{25 Points} --- MST Uniqueness]
+    Throughout the lectures on minimum spanning trees (MST), we assumed that no two edges in the input graph have equal weights, which implies that the MST is unique. In fact, a weaker condition on the edge weights implies MST uniqueness.
+
+    \begin{enumerate}
+        \item (\textbf{5 Points}) Describe an edge-weighted graph that has a unique minimum spanning tree, even though two edges have equal weights. \\\\
+        Lets say we have a graph $G$ with vertices $V=[A, B, C, D]$. The edges are: \\
+        $w_{AB}=1$ \\
+        $w_{BD}=1$ \\
+        $w_{CD}=3$ \\
+        $w_{AC}=2$ \\
+        Even though $AB$ and $BD$ have the same weight, $G$ has a unique $MST$ of $AB, BD, and AC$.
+        \item (\textbf{10 Points}) Prove that each of the following two conditions are sufficient for a graph $G$ to have a unique minimum spanning tree:
+        \begin{enumerate}
+            \item For any partition of the vertices of $G$ into two subsets, the minimum-weight edge with exactly one endpoint in each subset is unique. \\
+            Let's assume the opposite and say that $G$ has two $MST$ called $T_{1}$ and $T_{2}$. Let's call an edge $e$ in $T_{1}$ that is not in $T_{2}$. Due to the condition, we'll call $(a)$, there must be a minimum-weight edge $f$ that connects some subset of $T_{1}$ to $T_{2}$ that is unique. Therefore, $e$ and $f$ should form a cycle in $G$ as $e$ is not in $T_{2}$. For both $T$ to be $MST$, $e$ and $f$ must be the same weight since it has to be interchangeable for both $T_{1}$ and $T_{2}$ to be $MST$. This is due to the cut property where the lowest weight edge between any partition of a graph is included in the $MST$. Having a tie would allow for a choice to have multiple choices for multiple $MST$. This contradicts $(a)$ meaning if $(a)$ is true then there has to be a unique $MST$.
+            \item The maximum-weight edge in any cycle of $G$ is unique. \\
+            Let's assume the opposite and say that $G$ has two $MST$ called $T_{1}$ and $T_{2}$. Let's call an edge $e$ in $T_{1}$ that is not in $T_{2}$. Due to the condition, we'll call $(b)$, there must be a maximum-weight edge $f$ in the cycle formed by adding $e$ to $T_{2}$ that is unique. For both $T$ to be $MST$, $e$, and $f$ must be the same weight since it has to be interchangeable for there to be two distinct $MST$. This is due to the cycle property where the highest weight in a cycle is not in the $MST$. Thus having a tie would make it possible to have 2 different choices for multiple $MST$. This contradicts $(b)$ meaning if $(b)$ is true then there has to be a unique $MST$.
+        \end{enumerate}
+        \newpage
+        
+        \item (\textbf{10 Points}) Describe and analyze an algorithm to determine whether or not a graph has a unique minimum spanning tree. \\
+\begin{algorithm}[H]
+\caption{Is Unique MST}
+\Fn{isUnique($G$):} \\ {
+    $mst=$ Kruskals($G$) \\
+    \ForEach{edge $e$ in $G$}{
+        \If{$\lnot mst.contains(e)$}{
+            $cycle=$ findCycle($mst, e$) \\
+            $cycle.remove(e)$ \\
+            \ForEach{edge $f$ in $cycle$}{
+                \If{$w_{e} \le w_{f}$}{
+                    \KwRet false
+                }
+            }
+        }
+    }
+    \KwRet true
+}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Kruskal's Algorithm}
+\Fn{Kruskal($G$):} \\ {
+    $mst \gets []$ \\
+    $E \gets \text{edges of G sorted by weight}$ \\
+    $V \gets []$ \\
+    \ForEach{edge $e = (u, v)$ in $E$}{
+        \If{$\lnot V.contains(u) \land \lnot V.contains(v)$}{
+            $mst.add(e)$ \\
+            $V \cup (u, v)$
+        }
+    }
+    \KwRet $mst$
+}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Finding Cycles}
+\Fn{findCycle($mst, e$):} \\ {
+$G \gets mst \cup e$ \\
+$adjList[v_1 \ldots v_n] \gets \text{adjacency list of G}$ \\
+$(u, v) \gets \text{endpoints of} e$ \\
+$visited \gets []$ \\
+$ans \gets \text{DFS}(adjList, u, visited, \text{ null})$ \\
+\KwRet $ans$ reverted into list of edges
+}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Depth-First Search}
+\Fn{DFS($adjList[v_1 \ldots v_n], \text{ node }, visited, \text{ parent}$):} \\ {
+    $visited.\text{append}(\text{node})$\;
+    \ForEach{$\text{neighbor}$ in $adjList[\text{node}]$}{
+        \If{$\lnot visited.\text{contains}(\text{neighbor})$}{
+            \KwRet DFS($adjList, \text{ neighbor }, visited,$ node)
+        }
+        \If{neighbor $\neq$ parent}{
+            \KwRet visited
+        }
+    }
+}
+\end{algorithm}
+    \end{enumerate}
+\end{prob}
+
+\newpage
+
+This algorithm starts by first finding an MST for the graph. It does this by enacting Kruskal's greedy algorithm which iterates through a sorted list of edges and adds all needed edges from lowest to highest until all vertices form a tree. Afterward, every edge not included in the MST will be unioned to the MST to form a graph. This graph is now guaranteed to have a cycle as per the MST properties. To find the cycle, we took the adjacency list of the new graph and started a DFS starting from one endpoint of the edge that was added to the graph. That is because this edge is guaranteed to be a part of the cycle thus searching from any endpoint of this edge will yield a cycle. The DFS search recurses through neighboring vertices and checks if it can find a vertex that it has already seen to which it returns the list of vertices. After finding this cycle, the edge's weight will now be compared to every other edge in the cycle. If it happens to be equal to or lower than the weight of any other edge this means that the cycle property of MST is violated meaning that the graph does not have a unique MST. This will terminate the function by returning false. If it makes it through the iteration without returning false then we can successfully return true as no possibility of an alternate tree can be found.\\\\
+The runtime of the algorithm is . First, the runtime of Kruskal's algorithm is $O(E log E)$. By parsing through each vertex which is $O(V)$ and then sorting the edges which is $O(E log E)$. The comparison of finding if both the endpoints of a vertex has been found would be of $O(V log V)$. Presumably $E \ge V$ meaning that it is dominated by $O(E log E)$. The loop in the algorithm parses through every edge not included in the $MST$ which would be $O(E - V)$. In the loop, it finds the cycle involving the edge. Since the cycle can only be as big as $MST$ it is $O(V)$ since the number of edges would be equal to the number of vertices. Afterward, it does it a $O(V)$ comparison of each weight in the cycle. This means that the algorithm is dominated by a $O(EV - V^{2})$ loop. The space complexity would just be $O(E)$ as the biggest list possible needed to be stored in the algorithm is the list of edges.
+
+\clearpage
+\begin{prob}[\textbf{25 Points} -- Maximum Clique]
+    A clique $C$ in an undirected graph $G = (V, E)$ is a subset of the vertices,
+$C \subset V$, such that every two distinct vertices are adjacent. The Maximum
+Clique Problem is the task of finding a clique of maximum size.
+\begin{enumerate}
+\item (10 Points) State the decision version of the Maximum Clique Problem. Describe the polynomial certifier algorithm $B$ for this problem (i.e., what are its arguments and action). Show that $B$ runs in polynomial time (thus the Maximum Clique Problem is in NP). \\\\
+The decision version of the Maximum Clique Problem would be: \\
+Given $G$, does there exist $C$ of size $m$ or greater? \\
+$B$ would need $G$, some $C$ where $C \subset V$, and $m$.
+$B$ will parse through every vertex $V$ and checking there exists an edge connecting it to every other $V$ in $C$. Afterward, if $C$ does indeed qualify as a clique, it will check if the size of $C$ is greater than or equal to $m$. Upon verifying these two conditions, $B$ will return true or if not false. \\
+$B$ runs in $O(V^{2})$. This is because for every vertex it parses through every other vertex to ensure there exists an edge between them. This nested for loop is $O(V^{2})$. Therefore, $B$ is in NP because it runs in polynomial time.
+
+\item (15 Points) Show that the Maximum Clique Problem is NP-complete.
+
+We can reduce SAT, a NP-complete problem, to the Maximum Clique Problem. Let's say we have a Boolean equation $f$ with $k$ variables. We create $G$ by creating a vertex and its negation for each variable. So we have $v_{1}, \lnot v_{1} \ldots v_{k}, \lnot v_{k}$. Each clause in $f$ will represent a clique where the variables in each clause have edges between them. That means that if there is a clique of size equal to $k$ then there must be a way of assigning true and false to the variables to satisfy all the clauses. \\\\
+Since SAT can be reduced to Maximum Clique Problem then the Maximum Clique Problem is also NP-complete.
+\end{enumerate}
+\end{prob}
+
+\clearpage
+\begin{prob}[\textbf{25 Points} -- The Special Path]
+    Prove that the following problem is NP-complete. A  directed graph  $G$ is  given.  Several subsets  of vertices  are specified –  $T_1, \dots, T_k$  (these subsets could  intersect). Does there exist a path in $G$ which does not contain cycles and for every $i$ includes exactly $3$ vertices from $T_i$?
+\end{prob}
+
+Let's define a polynomial certifier algorithm $A$, taking in a graph $G$, subsets $T_{1} \ldots T_{k}$, and path $P$. \\
+By running an $O(V + E)$ DFS on the path we can determine whether it is acyclic or not. \\
+Afterward we can compare the vertices from $P$ to each $T_{i}$ to make sure that the union of the two sets has a size of exactly $3$. For each $T_{i}$ we can parse through each element seeing if they are contained in $P$. After accumulating these elements we can check the size of the list to see if the size is $3$. This makes the runtime at worst $O(kn^2)$. \\
+$A$ runs in polynomial time making Special Path NP.
+
+We can reduce SAT to the Special Path Problem. Let's say we have a Boolean equation $f$ with $p$ variables. We create $G$ by creating a vertex and its negation for each variable. So we have $v_{1}, \lnot v_{1} \ldots v_{k}, \lnot v_{p}$. Each clause in $f$ will represent a subset where the variables have edges between them. If there is a sufficient path in G that does not contain cycles and has exactly 3 $vertices$ in each subset, then there must be a way of assigning true and false to the variables to satisfy all the clauses. \\\\
+Since SAT can be reduced to Special Path and Special Path can be verified in polynomial time it is NP-complete.
+
+\end{document}
